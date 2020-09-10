@@ -16,12 +16,19 @@ namespace SmartSchool.Controllers
         // GET: Zoom
         public ActionResult Index()
         {
+            var rp_code = Request.QueryString["code"];
+
             var client = new RestSharp.RestClient("https://zoom.us/oauth/token");
             var request = new RestRequest(Method.POST);
             request.AddHeader("content-type", "application/json");
             request.AddHeader("authorization", "Basic "+ Base64Encode(OAuthConfiguration.clientId+ ':' +OAuthConfiguration.clientSecret));
+            request.RequestFormat = DataFormat.Json;
+            request.AddParameter("grant_type", "authorization_code");
+            request.AddParameter("code", rp_code);
+            request.AddParameter("redirect_uri", OAuthConfiguration.redirectURL);
+ 
             IRestResponse response = client.Execute(request);
-            ViewBag.Response = response;
+            ViewBag.Response = response.Content;
             return View();
         }
 

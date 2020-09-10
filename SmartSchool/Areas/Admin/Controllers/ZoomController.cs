@@ -7,7 +7,7 @@ using Common.Config;
 
 namespace SmartSchool.Areas.Admin.Controllers
 {
-    public class ZoomController : BaseController
+    public class ZoomController : Controller
     {
 
         // GET: Admin/Zoom

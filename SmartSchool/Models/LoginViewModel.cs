@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Models.User
+namespace SmartSchool.Models
 {
     public class LoginViewModel
     {

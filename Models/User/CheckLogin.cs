@@ -10,15 +10,15 @@ namespace Models.User
 {
     public class CheckLogin
     {
-        public  int CheckUserLogin(LoginViewModel model)
+        public  int CheckUserLogin(UserLogin model)
         {
             CurrentSession.ClearAll();
-            string pashPassWord = Password.HashPassword(model.password);
+            string pashPassWord = Password.HashPassword(model.Password);
             try
             {
                 OracleParameter paramReturn = new OracleParameter("p_return", OracleDbType.Int32, ParameterDirection.Output);
                 OracleHelper.ExecuteDataset(Config.connStr, CommandType.StoredProcedure, "IT_COIN.pkg_s_user.proc_user_login",
-                    new OracleParameter("p_username", OracleDbType.Varchar2, model.username, ParameterDirection.Input),
+                    new OracleParameter("p_username", OracleDbType.Varchar2, model.Username, ParameterDirection.Input),
                     new OracleParameter("p_password", OracleDbType.Varchar2, pashPassWord, ParameterDirection.Input),
                     paramReturn);
                 return Convert.ToInt32(paramReturn.Value.ToString());

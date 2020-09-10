@@ -7,7 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSchool", "SmartSchool\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{448B96F7-E64B-4113-8088-C9674A6C0BF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{34B8FFF4-A981-4A26-BFFD-2CD19645BE33}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Models\Services.csproj", "{34B8FFF4-A981-4A26-BFFD-2CD19645BE33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{74BB7C91-D293-4DC8-8DD4-0D3D3E153DCF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,14 @@ Global
 		{34B8FFF4-A981-4A26-BFFD-2CD19645BE33}.Release|Any CPU.Build.0 = Release|Any CPU
 		{34B8FFF4-A981-4A26-BFFD-2CD19645BE33}.Release|x86.ActiveCfg = Release|x86
 		{34B8FFF4-A981-4A26-BFFD-2CD19645BE33}.Release|x86.Build.0 = Release|x86
+		{74BB7C91-D293-4DC8-8DD4-0D3D3E153DCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74BB7C91-D293-4DC8-8DD4-0D3D3E153DCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74BB7C91-D293-4DC8-8DD4-0D3D3E153DCF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{74BB7C91-D293-4DC8-8DD4-0D3D3E153DCF}.Debug|x86.Build.0 = Debug|Any CPU
+		{74BB7C91-D293-4DC8-8DD4-0D3D3E153DCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74BB7C91-D293-4DC8-8DD4-0D3D3E153DCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74BB7C91-D293-4DC8-8DD4-0D3D3E153DCF}.Release|x86.ActiveCfg = Release|Any CPU
+		{74BB7C91-D293-4DC8-8DD4-0D3D3E153DCF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

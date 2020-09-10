@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace SmartSchool.Areas.Admin.Controllers
 {
-    public class DashBoardController : BaseController
+    public class DashBoardController : Controller
     {
         // GET: Admin/DashBoard
         public ActionResult Index()

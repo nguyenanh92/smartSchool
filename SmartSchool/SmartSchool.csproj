@@ -152,6 +152,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2042,7 +2043,6 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Base\" />
     <Folder Include="Areas\Admin\Views\Zoom\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -2062,9 +2062,9 @@
       <Project>{448b96f7-e64b-4113-8088-c9674a6c0bf4}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Models\Models.csproj">
+    <ProjectReference Include="..\Models\Services.csproj">
       <Project>{34b8fff4-a981-4a26-bffd-2cd19645be33}</Project>
-      <Name>Models</Name>
+      <Name>Services</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
