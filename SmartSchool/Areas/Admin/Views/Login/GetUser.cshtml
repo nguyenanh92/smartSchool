@@ -1,0 +1,9 @@
+﻿@model  List<ShopNick.Models.EF.Account>
+@{
+    ViewBag.Title = "GetUser";
+}
+
+@foreach (var item in Model)
+{
+    @item.UserName
+}

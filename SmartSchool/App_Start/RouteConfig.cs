@@ -14,6 +14,16 @@ namespace SmartSchool
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "CallBack-Room",
+                url: "callback",
+                defaults: new { controller = "ZoomAPI", action = "Index" }
+            );
+            routes.MapRoute(
+                name: "Zoom",
+                url: "get-token",
+                defaults: new { controller = "Zoom", action = "Index" }
+            );
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
