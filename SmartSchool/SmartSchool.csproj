@@ -148,7 +148,6 @@
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\ZoomController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ZoomAPIController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2008,8 +2007,10 @@
     <Content Include="Areas\Admin\Assets\vendor\jquery\jquery.min.map" />
     <Content Include="Areas\Admin\Assets\vendor\jquery\jquery.slim.min.map" />
     <Content Include="Areas\Admin\Views\Shared\_LeftSiderBar.cshtml" />
-    <Content Include="Areas\Admin\Views\Login\GetUser.cshtml" />
     <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Zoom\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Zoom\_InfoZoom.cshtml" />
+    <Content Include="Areas\Admin\Views\Zoom\_NotConnect.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -2035,13 +2036,10 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\ZoomAPI\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Base\" />
-    <Folder Include="Areas\Admin\Views\Zoom\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -2058,6 +2056,10 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BLL\BLL.csproj">
+      <Project>{f79cc0c3-77ce-49b4-9c2e-f3e50a27d5b1}</Project>
+      <Name>BLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{448b96f7-e64b-4113-8088-c9674a6c0bf4}</Project>
       <Name>Common</Name>

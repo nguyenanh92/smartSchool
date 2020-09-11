@@ -21,7 +21,7 @@ namespace SmartSchool.Areas.Admin.Controllers
                 filterContext.Result =
                     new RedirectToRouteResult(
                         new RouteValueDictionary(new
-                            { controller = "Login", action = "LoginAdmin", Area = "Administrator" }));
+                            { controller = "Login", action = "Index", Area = "Admin" }));
             }
 
             base.OnActionExecuting(filterContext);

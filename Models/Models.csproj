@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserZoom\UserZoom.cs" />
+    <Compile Include="ZoomConnect\ZoomConnect.cs" />
     <Compile Include="User\CheckLogin.cs" />
     <Compile Include="User\LoginViewModel.cs" />
     <Compile Include="User\User.cs" />

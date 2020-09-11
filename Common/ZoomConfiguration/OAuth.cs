@@ -12,7 +12,7 @@ using Common.Helper;
 
 namespace Common.Config
 {
-    public class OAuthConfiguration
+    public class OAuth
     {
         //Variables for storing the clientID and clientSecret key
         public static string URL_API = "https://zoom.us/oauth/authorize?response_type=code&client_id=";
@@ -22,5 +22,6 @@ namespace Common.Config
 
         public static string Uri = URL_API + clientId + "&redirect_uri=" + redirectURL;
 
+        public static string TOKEN = Func.Base64Encode(clientId + ':' + clientSecret);
     }
 }

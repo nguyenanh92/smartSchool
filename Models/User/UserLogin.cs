@@ -11,6 +11,5 @@ namespace Models.User
     {
         public int ID { get; set; }
         public string username { get; set; }
-        public bool remember { get; set; }
     }
 }
