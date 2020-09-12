@@ -41,6 +41,33 @@ namespace DAL
                 return -1;
             }
         }
+        public decimal Update(ZoomConnect model)
+        {
+            try
+            {
+                OracleParameter paramReturn =
+                    new OracleParameter("p_return", OracleDbType.Int32, ParameterDirection.Output);
+                OracleHelper.ExecuteDataset(Config.connStr, CommandType.StoredProcedure,
+                    "IT_COIN.pkg_s_user_zoom_connect.proc_s_user_zoom_connect_update",
+                    new OracleParameter("p_user_id", OracleDbType.Int32, model.UserId, ParameterDirection.Input),
+                    new OracleParameter("p_access_token", OracleDbType.Varchar2, model.Access_token,
+                        ParameterDirection.Input),
+                    new OracleParameter("p_token_type", OracleDbType.Varchar2, model.Token_type,
+                        ParameterDirection.Input),
+                    new OracleParameter("p_refresh_token", OracleDbType.Varchar2, model.Refresh_token,
+                        ParameterDirection.Input),
+                    new OracleParameter("p_expires_in", OracleDbType.Int32, model.Expires_in, ParameterDirection.Input),
+                    new OracleParameter("p_scope", OracleDbType.Varchar2, model.Scope, ParameterDirection.Input),
+                    new OracleParameter("p_status", OracleDbType.Varchar2, model.Status, ParameterDirection.Input),
+                    paramReturn);
+                return Convert.ToDecimal(paramReturn.Value.ToString());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return -1;
+            }
+        }
         public ZoomConnect GetById(int UserId)
         {
             try

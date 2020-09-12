@@ -26,6 +26,18 @@ namespace BLL
                 throw;
             }
         }
+        public decimal Update(ZoomConnect model)
+        {
+            try
+            {
+                return _zoomConfigDa.Update(model);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
 
         public ZoomConnect GetById(int UserId)
         {

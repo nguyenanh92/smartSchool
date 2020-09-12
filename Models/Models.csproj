@@ -67,6 +67,7 @@
     <Compile Include="User\LoginViewModel.cs" />
     <Compile Include="User\User.cs" />
     <Compile Include="User\UserLogin.cs" />
+    <Compile Include="ZoomInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

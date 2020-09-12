@@ -8,7 +8,9 @@
 
 }
 
- 
+
+
+
 <div class="container-fluid">
 
     <!-- Page Heading -->
@@ -18,7 +20,7 @@
     <!-- DataTales Example -->
     @if (!string.IsNullOrEmpty(CheckConnect.ToString()))
     {
-        @Html.Partial("_InfoZoom");
+        <div id="data-result"></div>
     }
     else
     {
@@ -26,9 +28,9 @@
 
     }
 </div>
+
+
 @section Script{
-
-
     @if (!string.IsNullOrEmpty(Messages))
     {
         <script>
@@ -41,33 +43,25 @@
     @if (!string.IsNullOrEmpty(CheckConnect.ToString()))
     {
         <script>
-            function getById(Id) {
+            $(document).ready(function () {
+                getById();
+            });
+            function getById() {
                 $.ajax({
-                    url: '/Student/GetById/' + Id,
-                    // data: JSON.stringify(dto),
+                    url: '/Admin/Zoom/GetInfoZoomAPI',
                     type: "GET",
                     contentType: "application/json; charset=utf-8",
-                    dataType: "json",
                     success: function (result) {
-                        var data = JSON.parse(result.data);
-                        var item = data.Table[0];
+                        console.log(result);
+                        $('#data-result').html(result);
 
-                        $('#StudentId').val(item.ID);
-                        $('#Name').val(item.NAME);
-
-                        $('#myModal').modal('show');
-                        $('#btnUpdate').show();
-                        $('#btnAdd').hide();
                     },
-                    error: function (errormessage) {
-                        alert(errormessage.responseText);
+                    error: function (xhr) {
+                        console.log(xhr);
                     }
                 });
                 return false;
             }
         </script>
     }
-
-
-
 }
