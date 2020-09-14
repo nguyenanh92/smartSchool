@@ -1,0 +1,48 @@
+﻿@using Models
+@{
+    List<Subject> _data = new List<Subject>();
+
+    if (ViewBag.Subject != null)
+    {
+        _data = ViewBag.Subject;
+    }
+}
+
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h4 class="mb-2 text-gray-800">Schedule Management</h4>
+    <p class="mb-4"></p>
+
+    <div class="container">
+        <div class="row">
+            @foreach (var item in _data)
+            {
+                <div class="col-lg-4">
+
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">@item.Name</h6>
+                        </div>
+                        <div class="card-body">
+                            <span>
+                                Status:
+                                <p class="btn btn-warning"><b>@item.Status</b> </p>
+                            </span>
+                            <p>@item.Description</p>
+                            <p>Class : <b>AG238</b></p>
+                            <p>Start At : @DateTime.Now</p>
+                        </div>
+                        <div class="card-footer" style="text-align: center">
+                            <a href="@Url.Action("StartLesson","Subject" , new {subjectId = @item.Id})" class="btn btn-primary">Start Lesson</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            }
+        </div>
+
+    </div>
+</div>

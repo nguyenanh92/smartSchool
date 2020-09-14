@@ -1,31 +1,92 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using Models
+@{
+    ViewBag.Title = "Courses Manager";
+    List<Subject> _data = new List<Subject>();
+
+    if (ViewBag.Subject != null)
+    {
+        _data = ViewBag.Subject;
+    }
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<section class="page-section portfolio" id="courses">
+    <div class="container">
+        <!-- Portfolio Section Heading-->
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Courses</h2>
+        <!-- Icon Divider-->
+        <div class="divider-custom">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+            <div class="divider-custom-line"></div>
+        </div>
+        <!-- Portfolio Grid Items-->
+        <div class="row">
+            @foreach (var item in _data)
+            {
+                if (item.Status == "LIVE")
+                {
+                    <!-- Portfolio Item 1-->
+                    <div class="col-md-6 col-lg-4 mb-5">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <div class="row">
+                                    <div class="col-lg-9">
+                                        <h6 class="m-0 font-weight-bold ">@item.Name</h6>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <img src="~/Assets/assets/img/live.png" width="35" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <span>
+                                    Status:
+                                    <p class="btn btn-primary"> <b>@item.Status</b> </p>
+                                </span>
+                                <p>@item.Description</p>
+                                <p>Class : <b>AG238</b></p>
+                                <p>Start At : @DateTime.Now</p>
+                            </div>
+                            <div class="card-footer" style="text-align: center">
+                                <a href="@Url.Action("StartLearning","Learing" , new {subjectId = @item.Id})" class="btn btn-primary">Join Now</a>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-6 col-lg-4 mb-5">
+
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <div class="row">
+                                    <div class="col-lg-9">
+                                        <h6 class="m-0 font-weight-bold ">@item.Name</h6>
+                                    </div>
+  
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <span>
+                                    Status:
+                                    <p class="btn btn-warning"><b>@item.Status</b> </p>
+                                </span>
+                                <p>@item.Description</p>
+                                <p>Start At : @DateTime.Now</p>
+                            </div>
+                            <div class="card-footer" style="text-align: center">
+                                <a href="javascript:void(0)" class="btn btn-default" style="background-color: darkgray;">Join Now</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+
+            }
+
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+</section>

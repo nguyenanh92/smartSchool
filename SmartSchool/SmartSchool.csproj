@@ -146,8 +146,10 @@
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashBoardController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SubjectController.cs" />
     <Compile Include="Areas\Admin\Controllers\ZoomController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LearingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1820,6 +1822,20 @@
     <Content Include="Areas\Admin\Assets\vendor\jquery\jquery.min.js" />
     <Content Include="Areas\Admin\Assets\vendor\jquery\jquery.slim.js" />
     <Content Include="Areas\Admin\Assets\vendor\jquery\jquery.slim.min.js" />
+    <Content Include="Assets\assets\img\avataaars.svg" />
+    <Content Include="Assets\assets\img\favicon.ico" />
+    <Content Include="Assets\assets\img\live.png" />
+    <Content Include="Assets\assets\img\portfolio\cabin.png" />
+    <Content Include="Assets\assets\img\portfolio\cake.png" />
+    <Content Include="Assets\assets\img\portfolio\circus.png" />
+    <Content Include="Assets\assets\img\portfolio\game.png" />
+    <Content Include="Assets\assets\img\portfolio\safe.png" />
+    <Content Include="Assets\assets\img\portfolio\submarine.png" />
+    <Content Include="Assets\assets\mail\contact_me.js" />
+    <Content Include="Assets\assets\mail\contact_me.php" />
+    <Content Include="Assets\assets\mail\jqBootstrapValidation.js" />
+    <Content Include="Assets\css\styles.css" />
+    <Content Include="Assets\js\scripts.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -2012,6 +2028,8 @@
     <Content Include="Areas\Admin\Views\Zoom\_NotConnect.cshtml" />
     <Content Include="Areas\Admin\Views\Zoom\_ConnectError.cshtml" />
     <Content Include="Areas\Admin\Views\Zoom\_ZoomInfo.cshtml" />
+    <Content Include="Areas\Admin\Views\Subject\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Subject\_MeetingError.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -2034,9 +2052,9 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\_Courses.cshtml" />
+    <Content Include="Views\Learing\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

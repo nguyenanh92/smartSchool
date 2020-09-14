@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="Contans.cs" />
     <Compile Include="ZoomConfiguration\Api.cs" />
+    <Compile Include="ZoomConfiguration\JWT.cs" />
     <Compile Include="ZoomConfiguration\OAuth.cs" />
     <Compile Include="Connection\Config.cs" />
     <Compile Include="Helper\CommonFuc.cs" />

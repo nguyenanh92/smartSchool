@@ -132,10 +132,16 @@ namespace SmartSchool.Areas.Admin.Controllers
                 {
                     try
                     {
+
                         var data = JsonConvert.DeserializeObject<ZoomInfo>(response.Content);
 
-                        ViewBag.Obj = data;
+                        var ses = new ZoomInfo();
+                        ses.Personal_meeting_url = data.Personal_meeting_url;
+                        ses.Pmi = data.Pmi;
+                        ses.UserId = session.ID;
+                        Session.Add(Contans.INFO_ZOOM_SESSION, ses);
 
+                        ViewBag.Obj = data;
                         return PartialView("_ZoomInfo", data);
                     }
                     catch (Exception e)
@@ -146,7 +152,7 @@ namespace SmartSchool.Areas.Admin.Controllers
                 }
                 else if (response.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                    var refresh_token = RefreshToken(reuslt);
+                    var refresh_token = RefreshToken(reuslt, session.ID);
 
                     if (refresh_token == true)
                     {
@@ -167,7 +173,7 @@ namespace SmartSchool.Areas.Admin.Controllers
                             throw;
                         }
                     }
-                    
+
                 }
                 else
                 {
@@ -203,7 +209,7 @@ namespace SmartSchool.Areas.Admin.Controllers
             }
         }
 
-        public static bool RefreshToken(ZoomConnect reuslt)
+        public static bool RefreshToken(ZoomConnect reuslt, int userId)
         {
             try
             {
@@ -212,8 +218,6 @@ namespace SmartSchool.Areas.Admin.Controllers
                 var request = new RestRequest(Method.POST);
                 request.AddHeader("content-type", "application/json");
                 request.AddHeader("authorization", "Basic " + OAuth.TOKEN);
-
-                request.RequestFormat = DataFormat.Json;
                 request.AddParameter("grant_type", "refresh_token");
                 request.AddParameter("refresh_token", reuslt.Refresh_token);
 
@@ -221,7 +225,7 @@ namespace SmartSchool.Areas.Admin.Controllers
 
                 if (response.StatusCode == HttpStatusCode.BadRequest)
                 {
-                    return false ;
+                    return false;
                 }
                 else
                 {
@@ -229,18 +233,17 @@ namespace SmartSchool.Areas.Admin.Controllers
 
                     var result = new ZoomConnect()
                     {
-                        UserId = reuslt.UserId,
+                        UserId = userId,
                         Access_token = data.Access_token,
                         Token_type = data.Token_type,
                         Refresh_token = data.Refresh_token,
                         Expires_in = data.Expires_in,
                         Scope = data.Scope,
-                        Status = data.Status,
+                        Status = "Update Token",
                     };
-                    decimal push = 0;
                     try
                     {
-                        push = _connectBus.Update(result);
+                        var push = _connectBus.Update(result);
                         if (push != -1) return true;
                         return false;
                     }

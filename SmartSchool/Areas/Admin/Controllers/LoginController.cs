@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Common;
 using Models.User;
 
 namespace SmartSchool.Areas.Admin.Controllers
 {
     public class LoginController : Controller
     {
-        public string USER_SESSION = "USER_SESSION";
-
         private CheckLogin checkLogin = new CheckLogin();
         // GET: Admin/Login
         public ActionResult Index(LoginViewModel model)
@@ -40,7 +39,7 @@ namespace SmartSchool.Areas.Admin.Controllers
 
                         userSession.username = user.username;
                         userSession.ID = user.id;
-                        Session.Add(USER_SESSION, userSession);
+                        Session.Add(Contans.USER_SESSION, userSession);
 
                         TempData["Count"] = 0;
                         TempData["Messages"] = "Login Success";

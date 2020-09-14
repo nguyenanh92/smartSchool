@@ -82,7 +82,8 @@ namespace DAL
                 zoom = (from dr in list
                     select new ZoomConnect()
                     {
-                        UserId = Convert.ToInt32(dr["ID"]),
+                        Id = Convert.ToInt32(dr["ID"]),
+                        UserId = Convert.ToInt32(dr["USERID"]),
                         Access_token = dr["ACCESS_TOKEN"].ToString(),
                         Token_type = dr["Token_type"].ToString(),
                         Refresh_token = dr["Refresh_token"].ToString(),
