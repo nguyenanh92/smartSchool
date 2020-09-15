@@ -148,6 +148,7 @@
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubjectController.cs" />
     <Compile Include="Areas\Admin\Controllers\ZoomController.cs" />
+    <Compile Include="Areas\Admin\Helper\AuthorZoom.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LearingController.cs" />
     <Compile Include="Global.asax.cs">
@@ -158,6 +159,8 @@
   <ItemGroup>
     <Content Include="Areas\Admin\Assets\css\sb-admin-2.css" />
     <Content Include="Areas\Admin\Assets\css\sb-admin-2.min.css" />
+    <Content Include="Areas\Admin\Assets\img\247201-P42DTX-639.jpg" />
+    <Content Include="Areas\Admin\Assets\img\OJ91CN0.jpg" />
     <Content Include="Areas\Admin\Assets\img\undraw_posting_photo.svg" />
     <Content Include="Areas\Admin\Assets\js\demo\chart-area-demo.js" />
     <Content Include="Areas\Admin\Assets\js\demo\chart-bar-demo.js" />
@@ -1835,7 +1838,11 @@
     <Content Include="Assets\assets\mail\contact_me.php" />
     <Content Include="Assets\assets\mail\jqBootstrapValidation.js" />
     <Content Include="Assets\css\styles.css" />
+    <Content Include="Assets\js\index.js" />
+    <Content Include="Assets\js\meeting.js" />
     <Content Include="Assets\js\scripts.js" />
+    <Content Include="Assets\js\tool.js" />
+    <Content Include="Assets\js\vconsole.min.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -2055,10 +2062,12 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\_Courses.cshtml" />
     <Content Include="Views\Learing\Index.cshtml" />
+    <Content Include="Views\Learing\ScreenLearn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\ZoomConnection\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

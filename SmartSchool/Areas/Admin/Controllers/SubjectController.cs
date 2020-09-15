@@ -20,6 +20,7 @@ namespace SmartSchool.Areas.Admin.Controllers
         private static SubjectBus _subjectBus = new SubjectBus();
         private static ZoomConnectBus _connectBus = new ZoomConnectBus();
         // GET: Admin/Subject
+
         public ActionResult Index()
         {
             var session = (ZoomInfo)Session[Contans.INFO_ZOOM_SESSION];

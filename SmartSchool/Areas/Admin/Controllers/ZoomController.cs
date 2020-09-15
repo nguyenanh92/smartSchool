@@ -14,6 +14,7 @@ using Models.User;
 using Newtonsoft.Json;
 using RestSharp;
 using Models.ZoomConnect;
+using SmartSchool.Areas.Admin.Helper;
 
 namespace SmartSchool.Areas.Admin.Controllers
 {
@@ -36,7 +37,7 @@ namespace SmartSchool.Areas.Admin.Controllers
         }
 
         //Chuyển hướng sang APP cấp quyền Zoom.
-        public ActionResult Authorization()
+        public ActionResult Authentication()
         {
             var uri = OAuth.Uri;
             return Redirect(uri);
@@ -126,13 +127,12 @@ namespace SmartSchool.Areas.Admin.Controllers
                 var session = (UserLogin)Session[Contans.USER_SESSION];
                 var reuslt = _connectBus.GetById(session.ID);
 
-                var response = RequestApi(Api.BASE_URL + url, reuslt);
+                var response = AuthorZoom.RequestApi(Api.BASE_URL + url, reuslt);
 
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     try
                     {
-
                         var data = JsonConvert.DeserializeObject<ZoomInfo>(response.Content);
 
                         var ses = new ZoomInfo();
@@ -152,13 +152,13 @@ namespace SmartSchool.Areas.Admin.Controllers
                 }
                 else if (response.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                    var refresh_token = RefreshToken(reuslt, session.ID);
+                    var refresh_token = AuthorZoom.RefreshToken(reuslt, session.ID);
 
                     if (refresh_token == true)
                     {
                         var reuslt_2 = _connectBus.GetById(session.ID);
 
-                        var response_2 = RequestApi(Api.BASE_URL + url, reuslt_2);
+                        var response_2 = AuthorZoom.RequestApi(Api.BASE_URL + url, reuslt_2);
                         try
                         {
                             var data = JsonConvert.DeserializeObject<ZoomInfo>(response_2.Content);
@@ -188,78 +188,5 @@ namespace SmartSchool.Areas.Admin.Controllers
             return PartialView("_ConnectError");
         }
 
-        public static IRestResponse RequestApi(string Uri, ZoomConnect reuslt)
-        {
-
-            try
-            {
-                var client = new RestSharp.RestClient(Uri);
-                var request = new RestRequest(Method.GET);
-                request.AddHeader("content-type", "application/json");
-                request.AddHeader("authorization", reuslt.Token_type + " " + reuslt.Access_token);
-
-                IRestResponse response = client.Execute(request);
-
-                return response;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-        }
-
-        public static bool RefreshToken(ZoomConnect reuslt, int userId)
-        {
-            try
-            {
-                var client = new RestSharp.RestClient("https://zoom.us/oauth/token");
-
-                var request = new RestRequest(Method.POST);
-                request.AddHeader("content-type", "application/json");
-                request.AddHeader("authorization", "Basic " + OAuth.TOKEN);
-                request.AddParameter("grant_type", "refresh_token");
-                request.AddParameter("refresh_token", reuslt.Refresh_token);
-
-                IRestResponse response = client.Execute(request);
-
-                if (response.StatusCode == HttpStatusCode.BadRequest)
-                {
-                    return false;
-                }
-                else
-                {
-                    var data = JsonConvert.DeserializeObject<ZoomConnect>(response.Content);
-
-                    var result = new ZoomConnect()
-                    {
-                        UserId = userId,
-                        Access_token = data.Access_token,
-                        Token_type = data.Token_type,
-                        Refresh_token = data.Refresh_token,
-                        Expires_in = data.Expires_in,
-                        Scope = data.Scope,
-                        Status = "Update Token",
-                    };
-                    try
-                    {
-                        var push = _connectBus.Update(result);
-                        if (push != -1) return true;
-                        return false;
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                        throw;
-                    }
-
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-        }
     }
 }
