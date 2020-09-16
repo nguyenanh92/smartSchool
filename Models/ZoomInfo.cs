@@ -8,9 +8,11 @@ namespace Models
 {
     public class ZoomInfo
     {
-        public int UserId { get; set; }
-        public string Id { get; set; }
+        public int InfoId { get; set; }
+        public int TeacherId { get; set; }
+        public string Info { get; set; }
 
+        public string Id { get; set; }
         public string First_name { get; set; }
         public string Last_name { get; set; }
         public string Email { get; set; }

@@ -21,12 +21,13 @@ namespace SmartSchool.Areas.Admin.Controllers
     public class ZoomController : BaseController
     {
         private static ZoomConnectBus _connectBus = new ZoomConnectBus();
+        private static ZoomInfoBus _zoomInfoBus = new ZoomInfoBus();
 
         // GET: Admin/Zoom
         public ActionResult Index()
         {
             var session = (UserLogin)Session[Contans.USER_SESSION];
-            var reuslt = _connectBus.GetById(session.ID);
+            var reuslt = _connectBus.GetZoomConnectByUserId(session.ID);
 
             if (reuslt != null)
             {
@@ -87,7 +88,7 @@ namespace SmartSchool.Areas.Admin.Controllers
                     };
 
                     decimal push = 0;
-                    var reuslt = _connectBus.GetById(session.ID);
+                    var reuslt = _connectBus.GetZoomConnectByUserId(session.ID);
                     if (reuslt == null)
                     {
                         //Lưu respone vào database
@@ -122,17 +123,23 @@ namespace SmartSchool.Areas.Admin.Controllers
         {
             try
             {
-
                 var session = (UserLogin)Session[Contans.USER_SESSION];
+
                 var data = AuthorZoom.GetInfoAPI(session.ID);
-                var ses = new ZoomInfo();
-                ses.Personal_meeting_url = data.Personal_meeting_url;
-                ses.Pmi = data.Pmi;
-                ses.UserId = session.ID;
-                Session.Add(Contans.INFO_ZOOM_SESSION, ses);
+                 
+                if (data != null)
+                {
+                    var get = _zoomInfoBus.GetZoomInfoByTearchId(session.ID);
+                    var convert = JsonConvert.SerializeObject(data);
+
+                    if (get == null)
+                    {
+                        _zoomInfoBus.Insert(session.ID, convert);
+                    }
+                }
 
                 ViewBag.Obj = data;
-                return PartialView("_ZoomInfo", data);
+                return PartialView("_ZoomInfo");
             }
             catch (Exception e)
             {
@@ -141,6 +148,6 @@ namespace SmartSchool.Areas.Admin.Controllers
 
             }
         }
-
+  
     }
 }

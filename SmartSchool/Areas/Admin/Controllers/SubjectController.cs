@@ -20,81 +20,73 @@ namespace SmartSchool.Areas.Admin.Controllers
     {
         private static SubjectBus _subjectBus = new SubjectBus();
         private static ZoomConnectBus _connectBus = new ZoomConnectBus();
+        private static ZoomInfoBus _zoomInfoBus = new ZoomInfoBus();
         // GET: Admin/Subject
 
         public ActionResult Index()
         {
+            var sesUser = (UserLogin)Session[Contans.USER_SESSION];
             List<Subject> list = new List<Subject>();
-            var session = (ZoomInfo)Session[Contans.INFO_ZOOM_SESSION];
-            if (session == null)
-            {
-                var sesUser = (UserLogin)Session[Contans.USER_SESSION];
-                var data = AuthorZoom.GetInfoAPI(sesUser.ID);
-                var ses = new ZoomInfo();
-                ses.Personal_meeting_url = data.Personal_meeting_url;
-                ses.Pmi = data.Pmi;
-                ses.UserId = sesUser.ID;
-                Session.Add(Contans.INFO_ZOOM_SESSION, ses);
+             
 
-                list = _subjectBus.GetById(sesUser.ID);
-                ViewBag.Subject = list;
-                return View();
-            }
-            list = _subjectBus.GetById(session.UserId);
+            list = _subjectBus.GetById(sesUser.ID);
             ViewBag.Subject = list;
             return View();
         }
 
-        public ActionResult StartLesson(int subjectId, string status = "LIVE")
+        public ActionResult StartLesson(CreateMeetingModel model, string status = "LIVE")
         {
-            var session = (ZoomInfo)Session[Contans.INFO_ZOOM_SESSION];
-            var result = _subjectBus.Update(subjectId, status);
-            if (result != -1)
+            var sesUser = (UserLogin)Session[Contans.USER_SESSION];
+
+            var info = _zoomInfoBus.GetZoomInfoByTearchId(sesUser.ID);
+
+            if (info !=  null)
             {
-                var url = "v2/meetings/" + session.Pmi + "";
+                var data = JsonConvert.DeserializeObject<ZoomInfo>(info.Info);
 
-                var rq = _connectBus.GetById(session.UserId);
+                var create = AuthorZoom.CreateMeetingAPI(sesUser.ID, data.Id, model);
+                //nếu tạo thành công nhớ đổi status 
 
-                var response = AuthorZoom.RequestApi(Api.BASE_URL + url, rq);
+                var result = _subjectBus.Update(model.SubjectId, status);
 
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    try
-                    {
+                var p = JsonConvert.DeserializeObject<MeetingViewModel>(create);
 
-                        var data = JsonConvert.DeserializeObject<SubjectItem>(response.Content);
 
-                        if (Session["Subjects"] == null)
-                        {
-                            Session["Subjects"] = new List<SubjectItem>();
-                        }
-                        List<SubjectItem> list = Session["Subjects"] as List<SubjectItem>;
+                var signature = SignatureZoom.GenerateSignature(p.id, model.Role);
 
-                        SubjectItem newItem = new SubjectItem()
-                        {
-                            Id = subjectId,
-                            MeetingId = data.Id,
-                            Password = data.Password,
-                            Created_at = data.Created_at,
-                            Start_url = data.Start_url,
-                            Join_url = data.Join_url,
-                        };
+                ViewBag.Name = sesUser.username;
+                ViewBag.Title = p.topic;
+                ViewBag.Id = p.id;
+                ViewBag.Pwd = p.password;
+                ViewBag.Role = model.Role;
+                ViewBag.Signature = signature;
+                ViewBag.ApiKey = JWT.APIKey;
 
-                        list.Add(newItem);
+                return View("ScreenLesson");
 
-                        //ViewBag.Obj = data;
-                        return Redirect(data.Start_url);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                        throw;
-                    }
 
-                }
+                //return RedirectToAction("ScreenLesson", new
+                //{
+                //    name = sesUser.username,
+                //    mn =  p.id,
+                //    email = "student@gmail.com",
+                //    pwd = p.password,
+                //    role = model.Role,
+                //    lang = "vi-VN",
+                //    signature = signature,
+                //    china = 0,
+                //    apiKey = JWT.APIKey
+                //});
+
 
             }
             return View("_MeetingError");
+        }
+
+
+        public ActionResult ScreenLesson()
+        {
+            return View();
         }
     }
 }

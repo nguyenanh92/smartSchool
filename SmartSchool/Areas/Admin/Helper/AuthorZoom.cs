@@ -24,7 +24,7 @@ namespace SmartSchool.Areas.Admin.Helper
         {
             var url = "v2/users/me";
 
-            var reuslt = _connectBus.GetById(userId);
+            var reuslt = _connectBus.GetZoomConnectByUserId(userId);
 
             var response = AuthorZoom.RequestApi(Api.BASE_URL + url, reuslt);
 
@@ -48,7 +48,7 @@ namespace SmartSchool.Areas.Admin.Helper
 
                 if (refresh_token == true)
                 {
-                    var reuslt_2 = _connectBus.GetById(userId);
+                    var reuslt_2 = _connectBus.GetZoomConnectByUserId(userId);
 
                     var response_2 = AuthorZoom.RequestApi(Api.BASE_URL + url, reuslt_2);
                     try
@@ -73,6 +73,36 @@ namespace SmartSchool.Areas.Admin.Helper
             }
 
         }
+
+        public static string CreateMeetingAPI(int userId ,string userZoomId, CreateMeetingModel model)
+        {
+            var url = Api.BASE_URL + "v2/users/" + userZoomId + "/meetings";
+
+            var reuslt = _connectBus.GetZoomConnectByUserId(userId);
+            var client = new RestSharp.RestClient(url);
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("content-type", "application/json");
+            request.AddHeader("authorization", "Bearer " + reuslt.Access_token);
+
+            //request.AddParameter("application/json", "{\"type\":2,\"created_at\":\"2020-09-22T20:30:00\",\"duration\":\"40\",\"password\":\"123456\",\"status\":\"waiting\",\"timezone\":\"Asia/Bangkok\",\"topic\":\"Integrate zoom APIs\",\"settings\":{\"host_video\":true,\"participant_video\":false}}", ParameterType.RequestBody);
+
+
+            request.AddParameter("application/json", "{\"type\": " + 2 + "," +
+                                                     "\"duration\":\"" + model.Duration + "\"," +
+                                                     "\"password\":\"" + model.Password + "\"," +
+                                                     "\"status\":\"waiting\"," +
+                                                     "\"timezone\":\"Asia/Bangkok\"," +
+                                                     "\"topic\":\"" + model.Title + "\"," +
+                                                     "\"settings\":" +
+                                                     "{\"host_video\":" + model.Host_video + "," +
+                                                     "\"participant_video\":" + model.Client_video + "}}",
+                                                     ParameterType.RequestBody);
+
+            IRestResponse response = client.Execute(request);
+            return response.Content;
+
+        }
+
         public static IRestResponse RequestApi(string Uri, ZoomConnect reuslt)
         {
 
@@ -148,3 +178,5 @@ namespace SmartSchool.Areas.Admin.Helper
         }
     }
 }
+
+ 

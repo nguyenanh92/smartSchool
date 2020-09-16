@@ -149,6 +149,7 @@
     <Compile Include="Areas\Admin\Controllers\SubjectController.cs" />
     <Compile Include="Areas\Admin\Controllers\ZoomController.cs" />
     <Compile Include="Areas\Admin\Helper\AuthorZoom.cs" />
+    <Compile Include="Areas\Admin\Helper\SignatureZoom.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LearingController.cs" />
     <Compile Include="Global.asax.cs">
@@ -2037,6 +2038,7 @@
     <Content Include="Areas\Admin\Views\Zoom\_ZoomInfo.cshtml" />
     <Content Include="Areas\Admin\Views\Subject\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Subject\_MeetingError.cshtml" />
+    <Content Include="Areas\Admin\Views\Subject\ScreenLesson.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

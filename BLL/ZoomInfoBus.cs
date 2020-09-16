@@ -1,24 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL;
-using Models.User;
-using Models.ZoomConnect;
+using Models;
 
 namespace BLL
 {
-    public class ZoomConnectBus
+    public class ZoomInfoBus
+
     {
-        private static ZoomConnectDA _zoomConfigDa = new ZoomConnectDA();
+        private static ZoomInfoDA _zoomInfoDa = new ZoomInfoDA();
 
-        public decimal Insert(ZoomConnect model)
+        public decimal Insert(int teacherId , string info)
         {
             try
             {
-                return _zoomConfigDa.Insert(model);
+                return _zoomInfoDa.Insert(teacherId ,info);
+            }
+            catch (Exception e) 
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+        public ZoomInfo GetZoomInfoByTearchId(int tearchId)
+        {
+            try
+            {
+                return _zoomInfoDa.GetZoomInfoByTearchId(tearchId);
             }
             catch (Exception e)
             {
@@ -26,24 +37,12 @@ namespace BLL
                 throw;
             }
         }
-        public decimal Update(ZoomConnect model)
-        {
-            try
-            {
-                return _zoomConfigDa.Update(model);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-        }
 
-        public ZoomConnect GetZoomConnectByUserId(int UserId)
+        public decimal Update(int teacherId, string info)
         {
             try
             {
-                return _zoomConfigDa.GetZoomConnectByUserId(UserId);
+                return _zoomInfoDa.Update(teacherId, info);
             }
             catch (Exception e)
             {

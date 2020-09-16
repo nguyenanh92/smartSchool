@@ -7,7 +7,18 @@
         _data = ViewBag.Subject;
     }
 }
+@section Css
+{
+    <style>
+        .form-group .req {
+            color: #fc2d42;
+        }
 
+        .title-input {
+            font-weight: 600;
+        }
+    </style>
+}
 
 <div class="container-fluid">
 
@@ -17,7 +28,7 @@
 
     <div class="container">
         <div class="row">
-            @foreach (var item in _data)
+            @foreach (var item in _data.Where(a => a.Status == "PENDING"))
             {
                 <div class="col-lg-4">
 
@@ -35,14 +46,115 @@
                             <p>Start At : @DateTime.Now</p>
                         </div>
                         <div class="card-footer" style="text-align: center">
-                            <a href="@Url.Action("StartLesson","Subject" , new {subjectId = @item.Id})" class="btn btn-primary">Start Lesson</a>
+                            @*<a href="@Url.Action("StartLesson","Subject" , new {subjectId = @item.Id})" class="btn btn-primary">Start Lesson</a>*@
+                            <button type="button" class="btn btn-info btn-sm op-modal" data-id="@item.Id" data-toggle="modal" data-target="#modal-online-timetable" data-original-title="" title=""
+                                    autocomplete="off">
+                                <i class="fa fa-cogs"></i> Config
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-online-timetable" data-backdrop="static">
+    <div class="modal-dialog modal-md">
+        <form id="form-addconference" action="/Admin/Subject/StartLesson" method="POST">
+            <input hidden name="subjectId" id="subjectId" />
+            <input hidden name="role" value="1" />
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title">Config Live Meeting </h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <label for="title" class="title-input">Meeting Title <small class="req"> *</small></label>
+                                    <input type="text" class="form-control" id="title" name="title">
+                                    <span class="text text-danger" id="title_error"></span>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <label for="password" class="title-input">Password <small class="req"> *</small></label>
+                                    <div class="input-group" id="password">
+                                        <input type="text" class="form-control" name="password">
+
+                                    </div>
+                                    <span class="text text-danger" id="pass_error"></span>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <label for="Role" class="title-input">Role <small class="req"> *</small></label>
+                                    <div class="input-group" id="Role">
+                                        <input type="tel" class="form-control" name="Role" value="Host" readonly="">
+
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="clearfix"></div>
+                                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <label for="date" class="title-input">Meeting Date <small class="req"> *</small></label>
+                                    <div class="input-group" id="meeting_date">
+                                        <input type="text" class="form-control" name="date" readonly="readonly" value="@DateTime.Now">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+
+                                    <span class="text text-danger" id="title_error"></span>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <label for="duration" class="title-input">Meeting Duration (Minutes) <small class="req"> *</small></label>
+                                    <input type="number" class="form-control" id="duration" name="duration" value="40">
+                                    <span class="text text-danger" id="title_error"></span>
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <label for="class" class="title-input">Host Video<small class="req"> *</small></label>
+                                    <br />
+                                    <label class="radio-inline"><input type="radio" name="host_video" value="1" checked="">Enable</label>&nbsp;
+                                    <label class="radio-inline"><input type="radio" name="host_video" value="0">Disabled</label>
+
+                                    <span class="text text-danger" id="class_error"></span>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <label for="class" class="title-input">Client Video<small class="req"> *</small></label>
+                                    <br />
+
+                                    <label class="radio-inline"><input type="radio" name="client_video" value="1">Enable</label>&nbsp;
+                                    <label class="radio-inline"><input type="radio" name="client_video" value="0" checked="">Disabled</label>
+
+                                    <span class="text text-danger" id="class_error"></span>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
                         </div>
                     </div>
 
                 </div>
-
-            }
-        </div>
-
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" id="load">
+                        <i class="fa fa-video-slash"></i> Start Live
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
+
+@section Script
+{
+    <script>
+        $(document).on("click", ".op-modal", function () {
+            var subjectId = $(this).data('id');
+            console.log(subjectId);
+            $("#subjectId").val(subjectId);
+        });
+    </script>
+}

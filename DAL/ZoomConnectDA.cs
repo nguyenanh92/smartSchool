@@ -68,7 +68,7 @@ namespace DAL
                 return -1;
             }
         }
-        public ZoomConnect GetById(int UserId)
+        public ZoomConnect GetZoomConnectByUserId(int UserId)
         {
             try
             {
