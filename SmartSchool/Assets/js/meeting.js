@@ -7,7 +7,7 @@
         meetingNumber: tmpArgs.mn,
         userName: tmpArgs.name,
         passWord: tmpArgs.pwd,
-        leaveUrl: "/",
+        leaveUrl: "/index.html",
         role: parseInt(tmpArgs.role, 10),
         userEmail: tmpArgs.email,
         lang: tmpArgs.lang,

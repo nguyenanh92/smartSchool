@@ -44,7 +44,7 @@ namespace SmartSchool.Controllers
                 mn = meetingNumber,
                 email = "student@gmail.com",
                 pwd = item.Password,
-                role = 0,
+                role = role,
                 lang = "vi-VN",
                 signature = token,
                 china = 0 ,

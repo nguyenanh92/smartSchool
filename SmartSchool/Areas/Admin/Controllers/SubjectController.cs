@@ -12,6 +12,7 @@ using Models.User;
 using Models.ZoomConnect;
 using Newtonsoft.Json;
 using RestSharp;
+using SmartSchool.Areas.Admin.Helper;
 
 namespace SmartSchool.Areas.Admin.Controllers
 {
@@ -23,9 +24,24 @@ namespace SmartSchool.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
+            List<Subject> list = new List<Subject>();
             var session = (ZoomInfo)Session[Contans.INFO_ZOOM_SESSION];
-            var lst = _subjectBus.GetById(session.UserId);
-            ViewBag.Subject = lst;
+            if (session == null)
+            {
+                var sesUser = (UserLogin)Session[Contans.USER_SESSION];
+                var data = AuthorZoom.GetInfoAPI(sesUser.ID);
+                var ses = new ZoomInfo();
+                ses.Personal_meeting_url = data.Personal_meeting_url;
+                ses.Pmi = data.Pmi;
+                ses.UserId = sesUser.ID;
+                Session.Add(Contans.INFO_ZOOM_SESSION, ses);
+
+                list = _subjectBus.GetById(sesUser.ID);
+                ViewBag.Subject = list;
+                return View();
+            }
+            list = _subjectBus.GetById(session.UserId);
+            ViewBag.Subject = list;
             return View();
         }
 
@@ -39,7 +55,7 @@ namespace SmartSchool.Areas.Admin.Controllers
 
                 var rq = _connectBus.GetById(session.UserId);
 
-                var response = RequestApi(Api.BASE_URL + url, rq);
+                var response = AuthorZoom.RequestApi(Api.BASE_URL + url, rq);
 
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
@@ -79,26 +95,6 @@ namespace SmartSchool.Areas.Admin.Controllers
 
             }
             return View("_MeetingError");
-        }
-
-        public static IRestResponse RequestApi(string Uri, ZoomConnect reuslt)
-        {
-            try
-            {
-                var client = new RestSharp.RestClient(Uri);
-                var request = new RestRequest(Method.GET);
-                request.AddHeader("content-type", "application/json");
-                request.AddHeader("authorization", reuslt.Token_type + " " + reuslt.Access_token);
-
-                IRestResponse response = client.Execute(request);
-
-                return response;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
         }
     }
 }

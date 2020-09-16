@@ -122,70 +122,24 @@ namespace SmartSchool.Areas.Admin.Controllers
         {
             try
             {
-                var url = "v2/users/me";
 
                 var session = (UserLogin)Session[Contans.USER_SESSION];
-                var reuslt = _connectBus.GetById(session.ID);
+                var data = AuthorZoom.GetInfoAPI(session.ID);
+                var ses = new ZoomInfo();
+                ses.Personal_meeting_url = data.Personal_meeting_url;
+                ses.Pmi = data.Pmi;
+                ses.UserId = session.ID;
+                Session.Add(Contans.INFO_ZOOM_SESSION, ses);
 
-                var response = AuthorZoom.RequestApi(Api.BASE_URL + url, reuslt);
-
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    try
-                    {
-                        var data = JsonConvert.DeserializeObject<ZoomInfo>(response.Content);
-
-                        var ses = new ZoomInfo();
-                        ses.Personal_meeting_url = data.Personal_meeting_url;
-                        ses.Pmi = data.Pmi;
-                        ses.UserId = session.ID;
-                        Session.Add(Contans.INFO_ZOOM_SESSION, ses);
-
-                        ViewBag.Obj = data;
-                        return PartialView("_ZoomInfo", data);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                        throw;
-                    }
-                }
-                else if (response.StatusCode == HttpStatusCode.Unauthorized)
-                {
-                    var refresh_token = AuthorZoom.RefreshToken(reuslt, session.ID);
-
-                    if (refresh_token == true)
-                    {
-                        var reuslt_2 = _connectBus.GetById(session.ID);
-
-                        var response_2 = AuthorZoom.RequestApi(Api.BASE_URL + url, reuslt_2);
-                        try
-                        {
-                            var data = JsonConvert.DeserializeObject<ZoomInfo>(response_2.Content);
-
-                            ViewBag.Obj = data;
-
-                            return PartialView("_ZoomInfo", data);
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(e);
-                            throw;
-                        }
-                    }
-
-                }
-                else
-                {
-                    return PartialView("_ConnectError");
-                }
+                ViewBag.Obj = data;
+                return PartialView("_ZoomInfo", data);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                throw;
+                return PartialView("_ConnectError");
+
             }
-            return PartialView("_ConnectError");
         }
 
     }

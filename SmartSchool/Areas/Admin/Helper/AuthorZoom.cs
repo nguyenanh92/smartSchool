@@ -5,7 +5,11 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using BLL;
+using Common;
 using Common.Config;
+using Common.ZoomConfiguration;
+using Models;
+using Models.User;
 using Models.ZoomConnect;
 using Newtonsoft.Json;
 using RestSharp;
@@ -16,12 +20,59 @@ namespace SmartSchool.Areas.Admin.Helper
     {
         private static ZoomConnectBus _connectBus = new ZoomConnectBus();
 
+        public static ZoomInfo GetInfoAPI(int userId)
+        {
+            var url = "v2/users/me";
 
-        //public static bool GetAuthenZoom(int userId, string url = "")
-        //{
+            var reuslt = _connectBus.GetById(userId);
 
-        //    return false;
-        //}
+            var response = AuthorZoom.RequestApi(Api.BASE_URL + url, reuslt);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                try
+                {
+                    var data = JsonConvert.DeserializeObject<ZoomInfo>(response.Content);
+
+                    return data;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
+            else if (response.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                var refresh_token = AuthorZoom.RefreshToken(reuslt, userId);
+
+                if (refresh_token == true)
+                {
+                    var reuslt_2 = _connectBus.GetById(userId);
+
+                    var response_2 = AuthorZoom.RequestApi(Api.BASE_URL + url, reuslt_2);
+                    try
+                    {
+                        var data = JsonConvert.DeserializeObject<ZoomInfo>(response_2.Content);
+
+                        return data;
+
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        throw;
+                    }
+                }
+                return new ZoomInfo();
+
+            }
+            else
+            {
+                return new ZoomInfo();
+            }
+
+        }
         public static IRestResponse RequestApi(string Uri, ZoomConnect reuslt)
         {
 
