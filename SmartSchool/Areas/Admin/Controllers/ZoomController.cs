@@ -66,7 +66,7 @@ namespace SmartSchool.Areas.Admin.Controllers
 
                 if (response.StatusCode == HttpStatusCode.BadRequest)
                 {
-                    ViewBag.Messages = "Authorization Success";
+                    ViewBag.Messages = "Authorization Error";
                     return PartialView("_ConnectError");
                 }
                 else
@@ -107,7 +107,6 @@ namespace SmartSchool.Areas.Admin.Controllers
                     return RedirectToAction("Index", "Zoom");
 
                 }
-
             }
             catch (Exception e)
             {
@@ -115,7 +114,6 @@ namespace SmartSchool.Areas.Admin.Controllers
                 throw;
             }
         }
-
 
         //Get info của zoom account bằng access_token và trả xuống PartialView
         [HttpGet]

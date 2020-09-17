@@ -14,13 +14,13 @@ namespace Common.Config
 {
     public class OAuth
     {
-        //Variables for storing the clientID and clientSecret key
-        public static string URL_API = "https://zoom.us/oauth/authorize?response_type=code&client_id=";
         public static string clientId = ConfigurationManager.AppSettings["clientId"];
         public static string clientSecret = ConfigurationManager.AppSettings["clientSecret"];
         public static string redirectURL = ConfigurationManager.AppSettings["redirectURL"];
 
-        public static string Uri = URL_API + clientId + "&redirect_uri=" + redirectURL;
+        public static string URL = "https://zoom.us/oauth/authorize?response_type=code&client_id=";
+
+        public static string Uri = URL + clientId + "&redirect_uri=" + redirectURL;
 
         public static string TOKEN = Func.Base64Encode(clientId + ':' + clientSecret);
     }

@@ -8,9 +8,6 @@
 
 }
 
-
-
-
 <div class="container-fluid">
 
     <!-- Page Heading -->
@@ -48,7 +45,7 @@
             });
             function getById() {
                 $.ajax({
-                    url: '/Admin/Zoom/GetInfoZoomAPI',
+                    url: '/Admin/Zoom/GetInfoZoom',
                     type: "GET",
                     contentType: "application/json; charset=utf-8",
                     success: function (result) {
