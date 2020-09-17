@@ -56,7 +56,6 @@ namespace SmartSchool.Areas.Admin.Helper
                         var data = JsonConvert.DeserializeObject<ZoomInfo>(response_2.Content);
 
                         return data;
-
                     }
                     catch (Exception e)
                     {
@@ -65,16 +64,14 @@ namespace SmartSchool.Areas.Admin.Helper
                     }
                 }
                 return new ZoomInfo();
-
             }
             else
             {
                 return new ZoomInfo();
             }
-
         }
 
-        public static string CreateMeetingAPI(int userId ,string userZoomId, CreateMeetingModel model)
+        public static IRestResponse CreateMeetingAPI(int userId ,string userZoomId, CreateMeetingModel model)
         {
             var url = Api.BASE_URL + "v2/users/" + userZoomId + "/meetings";
 
@@ -83,9 +80,6 @@ namespace SmartSchool.Areas.Admin.Helper
             var request = new RestRequest(Method.POST);
             request.AddHeader("content-type", "application/json");
             request.AddHeader("authorization", "Bearer " + reuslt.Access_token);
-
-            //request.AddParameter("application/json", "{\"type\":2,\"created_at\":\"2020-09-22T20:30:00\",\"duration\":\"40\",\"password\":\"123456\",\"status\":\"waiting\",\"timezone\":\"Asia/Bangkok\",\"topic\":\"Integrate zoom APIs\",\"settings\":{\"host_video\":true,\"participant_video\":false}}", ParameterType.RequestBody);
-
 
             request.AddParameter("application/json", "{\"type\": " + 2 + "," +
                                                      "\"duration\":\"" + model.Duration + "\"," +
@@ -99,13 +93,12 @@ namespace SmartSchool.Areas.Admin.Helper
                                                      ParameterType.RequestBody);
 
             IRestResponse response = client.Execute(request);
-            return response.Content;
+            return response;
 
         }
 
         public static IRestResponse RequestApi(string Uri, ZoomConnect reuslt)
         {
-
             try
             {
                 var client = new RestSharp.RestClient(Uri);
@@ -129,7 +122,6 @@ namespace SmartSchool.Areas.Admin.Helper
             try
             {
                 var client = new RestSharp.RestClient("https://zoom.us/oauth/token");
-
                 var request = new RestRequest(Method.POST);
                 request.AddHeader("content-type", "application/json");
                 request.AddHeader("authorization", "Basic " + OAuth.TOKEN);

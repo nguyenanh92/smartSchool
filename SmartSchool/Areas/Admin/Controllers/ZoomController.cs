@@ -119,12 +119,11 @@ namespace SmartSchool.Areas.Admin.Controllers
 
         //Get info của zoom account bằng access_token và trả xuống PartialView
         [HttpGet]
-        public ActionResult GetInfoZoomAPI()
+        public ActionResult GetInfoZoom()
         {
             try
             {
                 var session = (UserLogin)Session[Contans.USER_SESSION];
-
                 var data = AuthorZoom.GetInfoAPI(session.ID);
                  
                 if (data != null)
@@ -137,7 +136,6 @@ namespace SmartSchool.Areas.Admin.Controllers
                         _zoomInfoBus.Insert(session.ID, convert);
                     }
                 }
-
                 ViewBag.Obj = data;
                 return PartialView("_ZoomInfo");
             }

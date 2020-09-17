@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MeetingInfo.cs" />
     <Compile Include="MeetingViewModel.cs" />
     <Compile Include="CreateMeetingModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
